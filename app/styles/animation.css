@@ -1,0 +1,41 @@
+
+
+
+
+
+/* zoom in */
+.zoom-in{
+  animation: zoom-in-zoom-out 1s ease forwards;
+}
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(0, 0);
+  }
+ 
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+
+
+@keyframes circleExpand {
+  from {
+    clip-path: circle(0% at 90% 10%);
+  }
+  to {
+    clip-path: circle(150% at 90% 10%);
+  }
+}
+
+@keyframes circleCollapse {
+  from {
+    clip-path: circle(150% at 90% 10%);
+  }
+  to {
+    clip-path: circle(0% at 90% 10%);
+  }
+}
+
+
+

@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('../app/styles/button.css');
+@import url('../app/styles/mediaQueries.css');
+@import url('../app/styles/input.css');
+@import url('../app/styles/animation.css');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  } 
+
+
+  :root {
+    /* black variant */
+    --primary-black-hex: #000000;
+    --lighter-black-hex:#393939;
+    --cool-black-hex:#000a11;
+    --darker-black-hex:#000101;
+    --lighter-shade-black-hex:#1E1E1E;
+    --label-black-hex:#282828;
+      /* white variant */
+   --primary-white-hex:#fff;
+   --greyish-white-hex:#F5F8FA;
+   --pinkish-white-hex:#F4F5F8;
+ /* blue variant */
+ --primary-blue-hex: #0E2A46;
+ --darker-blue-hex:#190D30;
+ --light-blue-hex:#1C1C81;
+
+ /* yellow variant */
+ --primary-yellow-hex:#F1C40F;
+ /*  red variant */
+ --primary-red-hex:#AD1519;
+ --darker-red-hex:#84090C;
+ /* orange variant */
+ --primary-orange-hex:#CD4236;
+ /* green variant */
+ --primary-green-hex:#22D07B;
+ --light-green-hex:#2DAE0B;
+ /* purple variant */
+ --primary-purple-hex:#07222C;
+/* grey variant */
+--light-grey-hex:#B1B1B1;
+--light-shade-grey-hex:#565A5B;
+--lighter-grey-hex:#EBEBEB;
+--darker-grey-hex:#6C6C6C;
+--medium-grey-hex:#A4A4A4;
+
+  }
+
+.font-poppins{
+  font-family: var(--font-poppins);
+}
+
+
+.font-inter{
+  font-family: var(--font-inter);
+}
+
+
+
+
+
+.sidebar-container{
+  border-top-right-radius: 3rem;
+  border-bottom-left-radius: 3rem;
+}
+
+
+::-webkit-scrollbar{
+  background-color: var(--primary-black-hex);
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+
+
+.testimonial-card{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.outcome-card{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+.test-card{
+  display: flex !important;
+  justify-items: start;
+  align-items: start;
+}
+
+.slick-dots li button:before{
+  color: var(--primary-red-hex) !important;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999; /* Ensure it's above other content */
+  scrollbar-width: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.image-slider-container {
+  margin: 0 auto;
+  width: 400px;
+}
+
+.image-slider-container .slick-prev:before,
+.image-slider-container .slick-next:before {
+  color: black;
+}

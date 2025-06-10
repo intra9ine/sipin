@@ -1,0 +1,97 @@
+@media screen and (max-width:1420px) and (min-width:1000px) {
+    html {
+        font-size: 15px;
+      }
+      
+}
+@media screen and (max-width:1000px) and (min-width:100px) {
+  html {
+      font-size: 14px;
+    }
+    
+}
+
+@media screen and (max-width:1170px){
+    
+      
+      .navbar__container {
+        padding: 1rem 1.8rem;  
+        padding-top:1rem ; 
+        padding-bottom:1rem ; 
+        padding-right:1.8rem ;
+      }
+     
+ 
+      
+}
+@media screen and (min-width:1171px){
+    
+      .navbar__container {  
+        padding: 1rem 2.5rem;   
+      }
+    
+   
+}
+@media (max-width: 1024px) and (min-width: 896px) and (orientation:landscape){
+  #intro-bg__section{
+    height: 45rem !important;
+  }
+  #about-bg__section{
+    height: 45rem !important;
+  }
+  #gold-bg{
+    width: 80% !important;
+  }
+
+
+  
+ 
+}
+@media (max-width: 896px) and (min-width: 300px) and (orientation:landscape){
+  #intro-bg__section{
+    height: 60rem !important;
+  }
+  #about-bg__section{
+    height: 45rem !important;
+  }
+  #gold-bg{
+    width: 50% !important;
+  }
+
+
+  
+ 
+}
+@media screen and (max-width:896px) {
+  #intro-bg__section{
+    height: 60rem !important;
+  }
+  .discuss-circle {
+    border-radius: 2rem;
+    height: 2rem;
+    width: 2rem;
+    margin: 0.25rem;
+  }
+  .circle__arrow-discuss {
+
+    font-size: 1.6rem;
+  
+  }
+  #logo{
+    background-size: contain;
+  }
+  
+  
+  
+}
+
+@media screen and (max-width:500px) {
+  .navbar-menu{
+width: 75% !important;
+  }
+}
+
+
+
+
+

@@ -80,16 +80,10 @@
   #logo{
     background-size: contain;
   }
-  
-  
-  
+
 }
 
-@media screen and (max-width:500px) {
-  .navbar-menu{
-width: 75% !important;
-  }
-}
+
 
 
 

@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { IoNotificationsOutline, IoPersonOutline } from "react-icons/io5";
 import Link from "next/link";
-import { FiMenu } from "react-icons/fi";
 import { IoIosArrowDropdown } from "react-icons/io";
+import { RiMenuFold3Fill } from "react-icons/ri";
+import { clearLocalStorage } from "@/lib/helper";
 
 interface DashboardNavProps {
   toggleSidebar: () => void;
@@ -28,26 +29,28 @@ export default function DashboardNav({ toggleSidebar, isCollapsed, isMobile }: D
   }, []);
 
   return (
-    <header className={`bg-[var(--greyish-white-hex)] shadow-md fixed top-0 right-0 z-40 
+    <header className={`bg-[var(--primary-white-hex)] dashboard-nav shadow-sm  fixed top-0 right-0 z-40 
       ${isMobile ? "left-0" : `left-20 transition-all duration-300 ${!isCollapsed && "left-64"}`}`}>
       <nav className="flex justify-between items-center h-16 px-4">
-       {!isCollapsed&& <button
+       {!isCollapsed&& !isMobile && <button
           onClick={toggleSidebar}
-          className="text-[var(--darker-blue-hex)] p-2 hover:bg-white/10 rounded-lg"
+          className="text-[var(--primary-white-hex)] p-2 hover:bg-white/10 rounded-lg"
           aria-label="Toggle sidebar"
         >
-          <FiMenu className="h-6 w-6" />
+          <RiMenuFold3Fill  className="h-6 w-6" />
         </button>}
-
+{isMobile &&<section className="flex items-center space-x-2">
+          <img src="/icons/logo.png" alt="Logo" className="h-auto w-[10rem]" />
+        </section>}
         <div className={`${isCollapsed?'w-full items-end justify-end':'items-center'} flex  gap-4`}>
-          <button className="text-[var(--darker-blue-hex)] p-2 hover:bg-white/10 rounded-lg">
+          <button className="text-[var(--primary-white-hex)] p-2 hover:bg-white/10 rounded-lg">
             <IoNotificationsOutline className="h-6 w-6" />
           </button>
 
-          <div className="relative" ref={dropdownRef}>
+          <div className={`${isMobile?'hidden':'relative'} `} ref={dropdownRef}>
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="text-[var(--darker-blue-hex)] p-2 hover:bg-white/10 rounded-lg flex items-center gap-2"
+              className="text-[var(--primary-white-hex)] p-2 hover:bg-white/10 rounded-lg flex items-center gap-2"
             >
               <IoPersonOutline className="h-6 w-6" />
               {!isMobile && <IoIosArrowDropdown className="w-4" />}
@@ -65,7 +68,7 @@ export default function DashboardNav({ toggleSidebar, isCollapsed, isMobile }: D
                 <Link
                   href="/logout"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsDropdownOpen(false)}
+                  onClick={() =>  {clearLocalStorage();setIsDropdownOpen(false)}}
                 >
                   Logout
                 </Link>

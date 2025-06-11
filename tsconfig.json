@@ -22,7 +22,7 @@
     "paths": {
       "@/components/*": ["app/components/*"],
       "@/lib/*": ["app/lib/*"],
-      "@/hooks/*": ["app/hooks/*"]
+      "@/hooks/*": ["app/hook/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

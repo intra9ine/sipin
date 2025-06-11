@@ -7,7 +7,21 @@ export type NavbarDropDownDataItem = {
     link:string;
   };
   
-
+  export interface UserProps {
+    user_id: number;
+    email: string;
+    scheme_id: number;
+    last_name: string;
+    first_name: string;
+    password: string;
+    phone_number?: string | null;
+    status?: 'Pending' | 'Active' | 'InActive';
+    type?: 'Normal' | 'Basic' | 'Standard' | 'Premium' | 'Trial';
+    createdAt?: string; // or Date
+    updatedAt?: string; // or Date
+    doc?: string | null;
+  }
+  
 
 export interface EventItem {
   id: number;
@@ -33,14 +47,21 @@ export interface FormState {
   lastName: string;
   email: string;
   phoneNumber: string;
-  companyName: string;
-  companySector:string;
   password: string;
   confirmPassword: string;
-  companyDoc: File | null;
-  domain: string;
   showPassword: boolean;
   showConfirmPassword: boolean;
   passwordMatchError: string;
-  fileSizeError: string;
+  phoneInputError:string;
 }
+
+export interface LoginFormProps{
+  email: string;
+  password: string;
+  showPassword: boolean;
+}
+
+
+export type FetchResponse<T = unknown> =
+  | { status: "success"; data: T|string  } // For GET responses
+  | { status: "error"; data: string }; // For error handling

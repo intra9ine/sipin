@@ -34,6 +34,7 @@ html, body {
  --primary-blue-hex: #0E2A46;
  --darker-blue-hex:#190D30;
  --light-blue-hex:#1C1C81;
+ --lighter-blue-hex:#9f9ff1;
 
  /* yellow variant */
  --primary-yellow-hex:#F1C40F;
@@ -66,18 +67,10 @@ html, body {
 }
 
 
-
-
-
-.sidebar-container{
-  border-top-right-radius: 3rem;
-  border-bottom-left-radius: 3rem;
-}
-
-
 ::-webkit-scrollbar{
-  background-color: var(--primary-black-hex);
+  background-color: var(--lighter-grey-hex);
   width: 0.5rem;
+  border-radius: 2rem;
   height: 0.5rem;
 }
 
@@ -122,4 +115,50 @@ html, body {
 .image-slider-container .slick-prev:before,
 .image-slider-container .slick-next:before {
   color: black;
+}
+
+
+.spinner-box {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.pulse-container {
+  width: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pulse-bubble {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: var(--light-blue-hex);
+}
+.pulse-bubble-1 {
+  animation: pulse .4s ease 0s infinite alternate;
+}
+.pulse-bubble-2 {
+  animation: pulse .4s ease .2s infinite alternate;
+}
+.pulse-bubble-3 {
+  animation: pulse .4s ease .4s infinite alternate;
+}
+
+
+/* navbar */
+.dashboard-nav{
+  border-top-left-radius: 2rem;
+  background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+}
+
+
+.sidebar-container{
+  border-top-right-radius: 3rem;
+  border-bottom-left-radius: 3rem;
 }

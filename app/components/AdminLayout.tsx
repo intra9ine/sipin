@@ -5,45 +5,36 @@ import { usePathname } from 'next/navigation';
 import Sidebar from './Sidebar';
 import DashboardNav from './DashboardNav';
 import Loader from './Loader';
-
-
+import { useResponsive } from '@/hooks/useResponsive'; // adjust path accordingly
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Only show Sidebar and MainNavbar for routes other than /, /login, and /register
-  const showSidebarAndNavbar = pathname !== '/' && pathname !== '/login' && pathname !== '/register';
+  const { isMobile, isDesktop, hasMounted } = useResponsive();
+
+  const showSidebarAndNavbar =
+    pathname !== '/' && pathname !== '/login' && pathname !== '/register';
 
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
-      if (!mobile) setSidebarOpen(false);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
   }, []);
 
   const toggleSidebar = () => {
     if (isMobile) {
-      setSidebarOpen(!sidebarOpen);
+      setSidebarOpen((prev) => !prev);
     } else {
-      setIsCollapsed(!isCollapsed);
+      setIsCollapsed((prev) => !prev);
     }
   };
 
+  if (!hasMounted) return null;
+
   return (
-    <>
+    <main className="bg-[var(--primary-white-hex)] min-h-screen">
       {showSidebarAndNavbar && (
         <>
           <Sidebar
@@ -61,16 +52,14 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </>
       )}
       <main
-        className={`min-h-screen ${
+        className={`transition-all duration-300 ${
           showSidebarAndNavbar ? 'pt-16' : ''
-        } transition-all duration-300 bg-[var(--lighter-grey-hex)] ${
-          showSidebarAndNavbar && !isMobile ? (isCollapsed ? 'ml-20' : 'ml-64') : ''
-        }`}
+        } ${showSidebarAndNavbar && isDesktop ? (isCollapsed ? 'ml-20' : 'ml-64') : ''}`}
       >
         {loading ? <Loader /> : children}
       </main>
-    </>
+    </main>
   );
 };
 
-export default AdminLayout;
+export default AdminLayout

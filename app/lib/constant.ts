@@ -1,7 +1,19 @@
 
+export const API_END_POINT=`http://localhost:8000/api/` //test
 
+// USER API
+export const REGISTER_USER='user/register'
+export const LOGIN_USER='user/login'
+export const USERS='user'
+export const EDIT_INFO='user/edit'
+export const GET_ALL_USERS='user/getAll'
+export const UPDATE_USER='user/updateStatus'
 
-
+// PAYMENT
+export const PAYMENT='payment'
+export const PAYMENT_EDIT='payment/addOrEdit'
+export const GET_ALL_PAYMENT='payment/getAll'
+export const UPDATE_PAYMENT='payment/updateStatus'
 
 // button name
 export const buttonName={

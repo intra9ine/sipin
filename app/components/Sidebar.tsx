@@ -13,6 +13,7 @@ import { PiStrategy, PiStrategyFill } from "react-icons/pi"; // Added filled ver
 import { RiMenuFold4Fill, RiSecurePaymentFill } from "react-icons/ri"; // RiSecurePaymentFill is already filled
 import { BiSolidDice4 } from "react-icons/bi"; // BiSolidDice4 is already solid
 import { clearLocalStorage } from "@/lib/helper";
+import Image from "next/image";
 
 
 interface SidebarProps {
@@ -49,7 +50,7 @@ const Sidebar = ({ isOpen, closeSidebar,toggleSidebar, isCollapsed, isMobile }: 
 
       <header className={`${isMobile?'hidden':'flex'} p-4  items-center justify-between h-16`}>
         {!isCollapsed && <section className="flex items-center space-x-2">
-          <img src="/icons/logo.png" alt="Logo" className="h-auto" />
+          <Image src="/icons/logo.png" width={100} height={100} alt="Logo" className="h-auto" />
         </section>}
         {isCollapsed && (
           <button

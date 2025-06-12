@@ -15,9 +15,9 @@ export const useResponsive = () => {
 
     const handleResize = () => {
       const width = window.innerWidth;
-      if (width < 640) {
+      if (width < 896) {
         setScreenSize('mobile');
-      } else if (width < 1024) {
+      } else if (width < 896) {
         setScreenSize('tablet');
       } else {
         setScreenSize('desktop');

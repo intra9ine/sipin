@@ -9,7 +9,7 @@ import {  FetchResponse } from "./type";
 export const fetchAuthorized = async <T = undefined>(
     url: string,
     token: string,
-    method: "GET" | "POST" = "GET",
+    method: "GET" | "POST"|"DELETE" = "GET",
     body?: T // Generic type T for the body, default to undefined
 ): Promise<FetchResponse> => {
     try {
@@ -58,7 +58,7 @@ export const fetchAuthorized = async <T = undefined>(
 //  Authorized fetch function for post data
 export const fetchWithoutAuth = async <T = undefined>(
     url: string,
-    method: "GET" | "POST" = "GET",
+    method: "GET" | "POST"|"DELETE" = "GET",
     body?: T // Generic type T for the body, default to undefined
 ): Promise<FetchResponse> => {
     try {

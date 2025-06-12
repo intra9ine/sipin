@@ -43,14 +43,14 @@ const Sidebar = ({ isOpen, closeSidebar,toggleSidebar, isCollapsed, isMobile }: 
     <aside
       className={`fixed bg-transparent top-0 left-0 shadow-lg bg-gradient-to-t from-[#cd9cf2] to-[#f6f3ff] h-screen sidebar-container bg-white text-black z-50 transition-all duration-300
         ${isMobile
-          ? `h-20 transform bottom-0 w-full left-auto top-[100%] ${isOpen ? "translate-y-0" : "-translate-y-full"}`
+          ? `h-20 lg:h-20 transform bottom-0 w-full left-auto top-[100%] ${isOpen ? "translate-y-0" : "-translate-y-full"}`
           : `${isCollapsed ? "w-20" : "w-64"}`
         }`}
     >
 
       <header className={`${isMobile?'hidden':'flex'} p-4  items-center justify-between h-16`}>
         {!isCollapsed && <section className="flex items-center space-x-2">
-          <Image src="/icons/logo.png" width={100} height={100} alt="Logo" className="h-auto" />
+          <Image src="/icons/logo.png" width={100} height={100} alt="Logo" className="w-[12rem]" />
         </section>}
         {isCollapsed && (
           <button

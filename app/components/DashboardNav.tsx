@@ -6,6 +6,7 @@ import Link from "next/link";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { RiMenuFold3Fill } from "react-icons/ri";
 import { clearLocalStorage } from "@/lib/helper";
+import Image from "next/image";
 
 interface DashboardNavProps {
   toggleSidebar: () => void;
@@ -40,7 +41,7 @@ export default function DashboardNav({ toggleSidebar, isCollapsed, isMobile }: D
           <RiMenuFold3Fill  className="h-6 w-6" />
         </button>}
 {isMobile &&<section className="flex items-center space-x-2">
-          <img src="/icons/logo.png" alt="Logo" className="h-auto w-[10rem]" />
+          <Image width={100} height={100} src="/icons/logo.png" alt="Logo" className="h-auto w-[10rem]" />
         </section>}
         <div className={`${isCollapsed?'w-full items-end justify-end':'items-center'} flex  gap-4`}>
           <button className="text-[var(--primary-white-hex)] p-2 hover:bg-white/10 rounded-lg">

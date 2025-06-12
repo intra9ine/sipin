@@ -15,6 +15,11 @@ export const PAYMENT_EDIT='payment/addOrEdit'
 export const GET_ALL_PAYMENT='payment/getAll'
 export const UPDATE_PAYMENT='payment/updateStatus'
 
+// SCHEME
+export const SCHEME='scheme'
+export const GET_ALL_SCHEME='scheme/getAll'
+export const EDIT_SCHEME='scheme/addOrEdit'
+
 // button name
 export const buttonName={
     ShopNow:"Shop now",

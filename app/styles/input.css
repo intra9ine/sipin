@@ -3,13 +3,24 @@
 .input--secondary{
     background: transparent;
     width: 100%;
-    border: 0.15rem solid var(--light-blue-hex);
+    border: none;
+    border-bottom: 0.1rem solid var(--primary-blue-hex);
     color: var(--primary-black-hex);
-    border-radius: 0.7rem !important;
     line-height: 2rem;
     padding: 0.4rem 1rem;
     outline: none;
     letter-spacing: 0.01rem;
+}
+.input--select{
+  background: transparent;
+  width: 100%;
+  border: 0.05rem solid var(--primary-blue-hex);
+  color: var(--primary-black-hex);
+  border-radius: 1rem ;
+  line-height: 2rem;
+  padding: 0.5rem 2rem;
+  outline: none;
+  letter-spacing: 0.01rem;
 }
 .input--primary {
     border-bottom: 0.09rem solid var(--lighter-blue-hex);

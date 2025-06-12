@@ -65,3 +65,16 @@ export interface LoginFormProps{
 export type FetchResponse<T = unknown> =
   | { status: "success"; data: T|string  } // For GET responses
   | { status: "error"; data: string }; // For error handling
+
+  export type TableCellType =
+  | { type: 'text'; value: string }
+  | { type: 'number'; value: number }
+  | { type: 'text'; value: number }
+  | { type: 'input'; value: string; onChange: (val: string) => void }
+  | { type: 'select'; value: string; options: string[]; onChange: (val: string) => void }
+  | { type: 'actions'; buttons: { label: string; onClick: () => void; variant?: 'edit' | 'delete' | 'view' }[] };
+
+export interface TableProps {
+  headers: string[];
+  rows: TableCellType[][];
+}

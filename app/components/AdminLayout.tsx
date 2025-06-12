@@ -52,7 +52,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         </>
       )}
       <main
-        className={`transition-all duration-300 ${
+        className={`transition-all duration-300 overflow-hidden ${
           showSidebarAndNavbar ? 'pt-16' : ''
         } ${showSidebarAndNavbar && isDesktop ? (isCollapsed ? 'ml-20' : 'ml-64') : ''}`}
       >

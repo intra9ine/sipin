@@ -9,8 +9,14 @@ import { useRouter } from 'next/navigation';
 import { fetchWithoutAuth } from '@/lib/apiData';
 import { LOGIN_USER } from '@/lib/constant';
 import Link from 'next/link';
+import { setLocalStorageItem } from '@/lib/helper';
 
-
+interface LoginResponse {
+  token: string;
+  userData: {
+    user_id: string;
+  };
+}
 
 
 const LoginForm = () => {
@@ -34,6 +40,9 @@ const LoginForm = () => {
       }
       const res=await fetchWithoutAuth(LOGIN_USER,'POST',reqData)
       if (res.status === 'success') {
+        const data = res.data as LoginResponse;
+        setLocalStorageItem('token',data.token)
+        setLocalStorageItem('user',data.userData.user_id)
         toast.success(res.data?.toString() || 'Login successful');
         router.push('/dashboard')
       } else {

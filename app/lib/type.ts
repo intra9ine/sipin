@@ -1,12 +1,6 @@
 
 
-export type NavbarDropDownDataItem = {
-    id: number;
-    title: string;
-    isSelectedNav: boolean;
-    link:string;
-  };
-  
+
   export interface UserProps {
     user_id: number;
     email: string;
@@ -23,16 +17,6 @@ export type NavbarDropDownDataItem = {
   }
   
 
-export interface EventItem {
-  id: number;
-  imageData: string;
-  duration: string;
-  month: string;
-  year: string;
-  title: string;
-  status: string;
-  location: string;
-}
 
 export interface ReportItem {
   id: number;
@@ -78,3 +62,16 @@ export interface TableProps {
   headers: string[];
   rows: TableCellType[][];
 }
+
+export interface SchemeListItem {
+  scheme_id: number;
+  data: string; // e.g. "10000 turnover - 10 Months"
+};
+
+
+export interface SchemePlan  {
+  id: number;
+  title: string;       // e.g. 'Basic', 'Standard', etc.
+  amount: string;      // e.g. '100'
+  schemeLists: SchemeListItem[];
+};

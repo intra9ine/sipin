@@ -30,6 +30,7 @@ module.exports = {
       // => @media (max-width: 400px) { ... }
       'smxl': { 'max': '457px' },
       // => @media (max-width: 400px) { ... }
+      'smxlx': { 'max': '430px' },
     },
   },
   plugins: [],

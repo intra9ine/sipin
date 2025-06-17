@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/react-slick": "^0.23.13",
+    "crypto-js": "^4.2.0",
     "framer-motion": "^12.16.0",
     "libphonenumber-js": "^1.12.9",
     "next": "15.3.3",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

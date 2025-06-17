@@ -33,7 +33,7 @@ const Sidebar = ({ isOpen, closeSidebar,toggleSidebar, isCollapsed, isMobile }: 
     { name: "Schemes", path: "/scheme", icon: <PiStrategy className="h-7 w-7" />, activeIcon: <PiStrategyFill className="h-7 w-7" /> },
     // RiSecurePaymentFill and BiSolidDice4 are already filled/solid, so use them for both
     { name: "Payment", path: "/payment", icon: <RiSecurePaymentFill className="h-7 w-7" />, activeIcon: <RiSecurePaymentFill className="h-7 w-7" /> },
-    { name: "Bid Management", path: "/companyDetails", icon: <BiSolidDice4 className="h-7 w-7" />, activeIcon: <BiSolidDice4 className="h-7 w-7" /> },
+    { name: "Bid Management", path: "/bid-management", icon: <BiSolidDice4 className="h-7 w-7" />, activeIcon: <BiSolidDice4 className="h-7 w-7" /> },
     { name: "Profile", path: "/profile", icon: <IoPersonCircleOutline className="h-7 w-7" />, activeIcon: <IoPersonCircle className="h-7 w-7" /> },
     { name: "Logout", path: "/login", icon: <IoLogOutOutline className="h-7 w-7" />, activeIcon: <IoLogOut className="h-7 w-7" /> },
   ];

@@ -7,9 +7,9 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FormState, LoginFormProps } from '@/lib/type';
 import { useRouter } from 'next/navigation';
 import { fetchWithoutAuth } from '@/lib/apiData';
-import { LOGIN_USER } from '@/lib/constant';
+import { LOGIN_USER, TOKEN_VALUE, USER_VALUE } from '@/lib/constant';
 import Link from 'next/link';
-import { setLocalStorageItem } from '@/lib/helper';
+import { setEncryptedLocalStorageItem } from '@/lib/helper';
 
 interface LoginResponse {
   token: string;
@@ -41,16 +41,16 @@ const LoginForm = () => {
       const res=await fetchWithoutAuth(LOGIN_USER,'POST',reqData)
       if (res.status === 'success') {
         const data = res.data as LoginResponse;
-        setLocalStorageItem('token',data.token)
-        setLocalStorageItem('user',data.userData.user_id)
-        toast.success(res.data?.toString() || 'Login successful');
+        setEncryptedLocalStorageItem(TOKEN_VALUE,data.token)
+        setEncryptedLocalStorageItem(USER_VALUE,String(data.userData.user_id))
+        toast.success('Login successful');
         router.push('/dashboard')
       } else {
         toast.error(res.data?.toString() || 'Something went wrong');
       }
      
     } catch (error) {
-      toast.error(`${error}` || 'Unexpected error');
+      console.error(`${error}` || 'Unexpected error');
     }
    
   };
@@ -71,6 +71,7 @@ const LoginForm = () => {
     <input
       type="email"
       required
+      name='email'
       placeholder=" "
       value={formState.email}
       onChange={e => update({ email: e.target.value })}
@@ -91,6 +92,7 @@ const LoginForm = () => {
     <input
   type={formState.showPassword ? 'text' : 'password'}
   required
+  name='password'
       value={formState.password}
       placeholder=" "
       onChange={e => update({ password: e.target.value })}

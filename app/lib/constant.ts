@@ -8,18 +8,19 @@ export const USERS='user'
 export const EDIT_INFO='user/edit'
 export const GET_ALL_USERS='user/getAll'
 export const UPDATE_USER='user/updateStatus'
+export const USER_INFO='user/getById'
 
 // PAYMENT
 export const PAYMENT='payment'
 export const PAYMENT_EDIT='payment/addOrEdit'
 export const GET_ALL_PAYMENT='payment/getAll'
-export const UPDATE_PAYMENT='payment/updateStatus'
+
 
 // SCHEME
 export const SCHEME='scheme'
 export const GET_ALL_SCHEME='scheme/getAll'
 export const EDIT_SCHEME='scheme/addOrEdit'
-
+export const GET_ALL_BID_SCHEME='scheme/getAll'
 // button name
 export const buttonName={
     ShopNow:"Shop now",
@@ -36,19 +37,110 @@ export const buttonName={
     Enroll:'Enroll'
 
 }
-// pathname
-export const pathName={
-    AboutUs:'about-us',
-    Home:'/',
-    ContactUs:'mailto:learnovateeducation23@gmail.com',
-   Collections:'/collection'
-    
-}
 
-// email provider constant
-export const RESENDER_API='re_9znGjwo2_JDJ9dFkN98qwbu3vJyMkecAc'
-// API path
+export const TOKEN_VALUE='__uets!9!n'
+export const USER_VALUE='__uets!9!n^al$'
 
-export const SEND_MAIL='/api/send'
 
- 
+
+ export const schemeData=[
+    {
+        id:1,
+        schemeLists:[
+            {
+                scheme_id:6,
+                data:'100000 turnover - 10 Months'
+                
+            },
+           
+        ],
+         title:'Normal',
+         amount:'50'
+    },
+    {
+        id:2,
+        schemeLists:
+        [
+            {
+                scheme_id:7,
+                data:'100000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:8,
+                data:'25000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:9,
+                data:'50000 turnover - 10 Months'
+                
+            },
+          
+           
+        ],
+         title:'Basic',
+         amount:"100",
+    },
+    {
+        id:3,
+        schemeLists: [
+            {
+                scheme_id:6,
+                data:'100000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:7,
+                data:'25000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:8,
+                data:'50000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:9,
+                data:'75000 turnover - 10 Months'
+                
+            },
+           
+        ],
+         title:'Standard',
+         amount:'200'
+    },
+    {
+        id:4,
+        schemeLists: [
+            {
+                scheme_id:6,
+                data:'100000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:7,
+                data:'25000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:8,
+                data:'50000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:9,
+                data:'75000 turnover - 10 Months'
+                
+            },
+            {
+                scheme_id:10,
+                data:'100000 turnover - 10 Months'
+                
+            },
+           
+        ],
+         title:'Premium',
+         amount:'300'
+    },
+ ]

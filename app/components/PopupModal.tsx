@@ -20,7 +20,7 @@ const PopupModal: React.FC<Props> = ({ title, content, onClose }) => {
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-[var(--primary-white-hex)] p-6 rounded-xl m-5 max-w-md w-full shadow-xl"
+          className="bg-[var(--primary-white-hex)] p-6 rounded-xl m-5 max-w-xl w-full shadow-xl"
           initial={{ scale: 0.5, opacity: 0.5, y: -30 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0.5, y: 1 }}

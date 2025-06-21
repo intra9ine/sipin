@@ -47,4 +47,13 @@ export const getEncryptedLocalStorageItem = (key: string): string | null => {
     return bytes.toString(CryptoJS.enc.Utf8);
   };
   
+  export function getOrdinal(value: number): string {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = value % 100;
+    return value + (
+      suffixes[(v - 20) % 10] || 
+      suffixes[v] || 
+      suffixes[0]
+    );
+  }
   

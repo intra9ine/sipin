@@ -56,7 +56,7 @@ export type FetchResponse<T = unknown> =
   | { type: 'text'; value: number }
   | { type: 'input'; value: string; onChange: (val: string) => void }
   | { type: 'select'; value: string; options: string[]; onChange: (val: string) => void }
-  | { type: 'actions'; buttons: { label: string; onClick: () => void; variant?: 'edit' | 'delete' | 'view' }[] };
+  | { type: 'actions'; buttons: { label: string;disabled?:boolean; onClick: () => void; variant?: 'edit' | 'delete' | 'view'|'join'|'bid' }[] };
 
 export interface TableProps {
   headers: string[];

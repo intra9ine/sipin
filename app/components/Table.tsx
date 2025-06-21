@@ -2,6 +2,8 @@ import { TableProps } from '@/lib/type';
 import React, { useState } from 'react';
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from 'react-icons/bs';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
+import { FaPeopleGroup } from 'react-icons/fa6';
+import { RiAuctionFill } from 'react-icons/ri';
 
 
 
@@ -79,21 +81,22 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
                                     btn.variant === 'delete'
                                       ? FaTrash
                                       : btn.variant === 'edit'
-                                      ? FaEdit
+                                      ? FaEdit:btn.variant==='join'? FaPeopleGroup :btn.variant==='bid'?RiAuctionFill 
                                       : FaEye;
   
                                   return (
                                     <button
                                       key={bIdx}
+                                      disabled={btn.disabled}
                                       onClick={btn.onClick}
-                                      className={`flex items-center gap-1 px-2 py-1 text-xs rounded`}
+                                      className={`flex items-center  gap-1 px-2 py-1 text-xs rounded`}
                                     >
                                       <Icon
-                                        className={`text-xl ${
+                                        className={`text-xl ${btn.disabled && 'text-[var(--light-grey-hex)]'}  ${
                                           btn.variant === 'delete'
                                             ? 'text-[var(--primary-red-hex)]'
                                             : btn.variant === 'edit'
-                                            ? 'text-[var(--primary-blue-hex)]'
+                                            ? 'text-[var(--primary-blue-hex)]':btn.variant==='join'?'text-[var(--primary-green-hex)]':btn.variant==='bid'?'text-[var(--lighter-blue-hex)]'
                                             : 'text-[var(--lighter-blue-hex)]'
                                         }`}
                                       />

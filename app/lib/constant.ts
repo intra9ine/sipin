@@ -15,12 +15,23 @@ export const PAYMENT='payment'
 export const PAYMENT_EDIT='payment/addOrEdit'
 export const GET_ALL_PAYMENT='payment/getAll'
 
+// SCHEME PAYMENT
+export const SCHEME_PAYMENT='scheme-payment'
+export const SCHEME_PAYMENT_EDIT='scheme-payment/addOrEdit'
+export const SCHEME_GET_ALL_PAYMENT='scheme-payment/getAll'
+
+// BID
+export const MONTHLY_BID='bid'
+export const MONTHLY_BID_EDIT='bid/addOrEdit'
+export const MONTHLY_BID_WINNER='bid/getWinner'
+export const MONTHLY_BID_GET_ALL='bid/getAll'
 
 // SCHEME
 export const SCHEME='scheme'
 export const GET_ALL_SCHEME='scheme/getAll'
 export const EDIT_SCHEME='scheme/addOrEdit'
-export const GET_ALL_BID_SCHEME='scheme/getAll'
+export const GET_ALL_BID_SCHEME='scheme/getAllBidSchemes'
+export const GET_ALL_BID_USERS='scheme/getAllBidUsers'
 // button name
 export const buttonName={
     ShopNow:"Shop now",

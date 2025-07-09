@@ -170,12 +170,13 @@ const Payment = () => {
 
 
 
-  const headers = ['Payment Id','Trial','Amount','Transaction Id','Paid On','Action'];
+  const headers = ['Payment Id','Trial','Amount','Transaction Id','Paid On','Status','Action'];
   const rows: TableCellType[][] = rowData.map((row) => [
     { type: 'number', value: row.payment_id },
     { type: 'text', value: row.tier_name },
     { type: 'text', value: row.amount },
     { type: 'text', value: row.transaction_id },
+    { type: 'text', value: row.payment_status },
     { type: 'text', value: formatDateTime(row.paid_on) },
     {
       type: 'actions',
@@ -191,13 +192,12 @@ const Payment = () => {
   ]);
 
   return (
-    <section className="min-h-screen font-poppins p-6 bg-gray-50">
-      <main className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold mb-6">Transaction Management</h1>
-        
+    <section className="bg-[var(--lighter-green-hex)]  min-h-screen p-6 ">
+    <main className="flex mt-[5.5rem] lg:mt-[1rem] justify-between items-center">
+      <h1 className="text-2xl font-semibold mb-4  smxl:text-xl">Scheme Tire Transaction</h1>
+      
 
-      </main>
-
+    </main>
       {loading ? (
         <Loader />
       ) : rows.length > 0 ? (
@@ -213,25 +213,25 @@ const Payment = () => {
      title={'View Payment Details'}
      onClose={() => setShowModal(false)}
      content={
-       <main className="grid  grid-cols-1  gap-4 p-4 text-sm text-gray-700 overflow-y-scroll h-[20rem]">
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Payment ID:</span> {formData?.payment_id}
-         </div>
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Paid on:</span> {formatDateTime(formData?.paid_on)}
-         </div>
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Amount:</span> {formData?.amount}
-         </div>
+      <ul className="grid list-disc grid-cols-1 smxl:text-sm  gap-4 p-4  text-[var(--view-text-hex)] overflow-y-scroll h-[20rem]">
+         <li className="border-b w-auto pb-2">
+           <span className="font-semibold ">Payment ID:</span> {formData?.payment_id}
+         </li>
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Paid on:</span> {formatDateTime(formData?.paid_on)}
+         </li>
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Amount:</span> {formData?.amount}
+         </li>
         
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Transaction ID:</span> {formData?.transaction_id}
-         </div>
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Invoice ID:</span> {formData?.invoice_number}
-         </div>
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Payment Status:</span> 
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Transaction ID:</span> {formData?.transaction_id}
+         </li>
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Invoice ID:</span> {formData?.invoice_number}
+         </li>
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Payment Status:</span> 
            <span className={`ml-2 font-medium ${
              formData?.payment_status === 'Active' ? 'text-[var(--primary-green-hex)]' : 
              formData?.payment_status === 'Pending' ? 'text-[var(--primary-yellow-hex)]' : 
@@ -239,12 +239,12 @@ const Payment = () => {
            }`}>
              {formData?.payment_status}
            </span>
-         </div>
-         <div className="border-b pb-2">
-           <span className="font-semibold text-gray-900">Usage:</span> {formData?.type}
-         </div>
+         </li>
+         <li className="border-b pb-2">
+           <span className="font-semibold ">Usage:</span> {formData?.type}
+         </li>
        
-       </main>
+       </ul>
      }
    />
    

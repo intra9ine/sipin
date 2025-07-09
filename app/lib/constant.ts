@@ -9,6 +9,7 @@ export const EDIT_INFO='user/edit'
 export const GET_ALL_USERS='user/getAll'
 export const UPDATE_USER='user/updateStatus'
 export const USER_INFO='user/getById'
+export const DASHBOARD_INFO='user/dashboard'
 
 // PAYMENT
 export const PAYMENT='payment'
@@ -51,7 +52,7 @@ export const buttonName={
 
 export const TOKEN_VALUE='__uets!9!n'
 export const USER_VALUE='__uets!9!n^al$'
-
+export const USER_NAME='__uets@!9!n^al$$*12%'
 
 
  export const schemeData=[
@@ -155,3 +156,13 @@ export const USER_VALUE='__uets!9!n^al$'
          amount:'300'
     },
  ]
+
+
+ export const menuItems = [
+    { name: "Dashboard", title: "Dashboard", path: "/dashboard", iconName: "dashboard" },
+    { name: "Scheme", title: "Scheme", path: "/scheme", iconName: "scheme" },
+    { name: "Payment", title: "Payment", path: "/payment", iconName: "transaction" },
+    { name: "Bid Management", title: "Bid Management", path: "/bid-management", iconName: "bid" },
+    { name: "Profile", title: "Admin Profile", path: "/profile", iconName: "profile" },
+    { name: "Logout", title: "", path: "/login", iconName: "logout" },
+  ];

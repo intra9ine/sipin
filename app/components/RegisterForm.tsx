@@ -3,7 +3,6 @@
 
 import React, { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FormState } from '@/lib/type';
 import { parsePhoneNumberFromString, CountryCode } from 'libphonenumber-js';
 import 'react-international-phone/style.css';
@@ -103,41 +102,28 @@ const RegisterForm = () => {
     field: 'password' | 'confirmPassword',
     showField: 'showPassword' | 'showConfirmPassword'
   ) => (
-    <fieldset className="relative pb-[0.5rem]">
+    <fieldset className="pb-[0.5rem]">
+      <label
+    >
+     {label}<span className='text-[var(--primary-red-hex)]'>*</span>
+    </label>
     <input
   type={formState[showField] && formState[field] ? 'text' : 'password'}
   required
       id={field}
       value={formState[field]}
-      placeholder=" "
+      placeholder={field==='password'?"Password":'Confirm Password'}
       onChange={e => update({ [field]: e.target.value })}
       onBlur={validatePasswords}
-      className="peer w-full border px-3 py-2 rounded-lg text-sm  focus:outline-none"
+      className="input--custom"
     />
   
-    <label
-      htmlFor={field}
-      className={`absolute left-3 transition-all duration-200  bg-[var(--primary-white-hex)] px-1 
-        text-sm text-gray-500 
-        ${
-          formState[field] || formState[showField]
-            ? 'top-[-0.7rem] text-xs' // stay up if there's value or password is shown
-            : 'top-[30%] -translate-y-1/2 peer-placeholder-shown:top-[39%] peer-placeholder-shown:text-sm peer-focus:top-[-0.1rem] peer-focus:text-xs'
-        }`}
-    >
-      {label}
-    </label>
+    
   
-    <button
-      type="button"
-      onClick={() => update({ [showField]: !formState[showField] })}
-      className={`${formState[field] || formState[showField]?'top-[39%]':'top-[39%]'} absolute right-2  -translate-y-1/2`}
-    >
-      {formState[showField] ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
-    </button>
+  
   
     {field === 'confirmPassword' && formState.passwordMatchError && (
-      <p className="text-[var(--darker-red-hex)] text-xs absolute left-1 -bottom-2">{formState.passwordMatchError}</p>
+      <p className="text-[var(--darker-red-hex)] text-xs ">{formState.passwordMatchError}</p>
     )}
   </fieldset>
   
@@ -146,57 +132,61 @@ const RegisterForm = () => {
 
   return (
    
-        
-        <section className="lg:w-full  w-1/2 bg-[var(--primary-white-hex)]  p-8 flex flex-col">
-          <h3 className="text-2xl font-semibold mb-2 ">Register to SIPIN</h3>
-          <p className="text-sm ">You can launch your investment platform in under 10 minutes.</p>
+    <section className="lg:w-3/4 sm:w-10/12 smxl:w-11/12 lg:mx-auto  absolute shadow-lg top-[4rem] bottom-[2rem] rounded-[2.5rem] right-[6rem] xlgm:right-[2rem] lg:right-0 lg:left-0 w-[35%] xlg:w-[40%] xlgm:w-1/2 bg-[var(--primary-white-hex)]  p-8 smx:px-6 flex flex-col">
+          <main className='flex justify-between'>
+          <h1 className='text-lg smx:text-base mb-4'>Welcome to <span className='text-[var(--primary-green-hex)]'>SIPIN</span></h1>
+            <h1 className='smx:text-sm text-[var(--light-shade-grey-hex)]'>Have an Account ?<br/>
+           <Link href={'/login'} className='text-[var(--primary-green-hex)]'>Sign in</Link> 
+            </h1>
+            </main>
+            
+          <h3 className="text-4xl smx:text-3xl font-semibold mb-2 ">Sign up</h3>
           <form autoComplete="off" className="flex-1 space-y-4 overflow-y-auto" onSubmit={handleSubmit}>
-          <div className="flex lg:flex-col flex-row gap-6 pt-4">
+         <main className='overflow-y-scroll smx:text-sm flex flex-col gap-4 h-[50vh] lg:h-auto'>
+          <div className="flex  w-full lg:flex-col flex-row gap-6 pt-4">
   {/* First Name */}
-  <div className="relative flex-1">
+  <fieldset className='w-1/2 lg:w-full'>
+  <label
+      
+    >
+      First Name<span className='text-[var(--primary-red-hex)]'>*</span>
+    </label>
     <input
       type="text"
-      id="firstName"
       required
-      placeholder=" "
+      placeholder="First Name"
       value={formState.fullName}
       onChange={e => update({ fullName: e.target.value })}
-      className="peer w-full border px-3 py-2 rounded-lg text-sm  focus:outline-none"
+      className="input--custom"
     />
-    <label
-      htmlFor="firstName"
-      className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 
-        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm 
-        peer-focus:top-[-0.1rem] peer-focus:text-xs 
-        ${formState.fullName ? 'top-[0.1rem] text-xs' : ''} bg-[var(--primary-white-hex)] px-1`}
-    >
-      First Name*
-    </label>
-  </div>
+   
+  </fieldset>
 
   {/* Last Name */}
-  <div className="relative flex-1">
+  <fieldset className='w-1/2 lg:w-full'>
+  <label
+      
+    >
+      Last Name<span className='text-[var(--primary-red-hex)]'>*</span>
+    </label>
     <input
       type="text"
       id="lastName"
-      placeholder=" "
+      placeholder="Last Name"
       value={formState.lastName}
       onChange={e => update({ lastName: e.target.value })}
-      className="peer w-full border px-3 py-2 rounded-lg text-sm  focus:outline-none"
+     className="input--custom"
     />
-    <label
-      htmlFor="lastName"
-      className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 
-        peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm 
-        peer-focus:top-[-0.1rem] peer-focus:text-xs 
-        ${formState.lastName ? 'top-[0.1rem] text-xs' : ''} bg-[var(--primary-white-hex)] px-1`}
-    >
-      Last Name
-    </label>
-  </div>
+    
+  </fieldset>
 </div>
 
-<fieldset className='my-20'>
+<fieldset>
+<label
+      
+    >
+      Contact Number<span className='text-[var(--primary-red-hex)]'>*</span>
+    </label>
             <PhoneInput
              defaultCountry="in"
              name='phone'
@@ -209,37 +199,34 @@ const RegisterForm = () => {
                 setCountry(meta.country);
               }}
               
-                className="w-full  px-4 rounded-lg border focus:outline-none text-sm bg-[var(--primary-white-hex)] phone-input-inner"
+                className="input--custom py-[0.1rem]"
             />
 {formState.phoneInputError && (
       <p className="pl-2 pt-2 text-[var(--darker-red-hex)] text-xs ">{formState.phoneInputError}</p>
     )}
  </fieldset>
             {/* Email */}
-  <div className="relative flex-1 pb-3">
+  <fieldset>
+  <label
+      
+    >
+      Email<span className='text-[var(--primary-red-hex)]'>*</span>
+    </label>
     <input
       type="email"
       id="email"
       required
-      placeholder=" "
+      placeholder="Email is here"
       value={formState.email}
       onChange={e => update({ email: e.target.value })}
-      className="peer  w-full border px-3 py-2 rounded-lg text-sm  focus:outline-none"
+      className="input--custom"
     />
-    <label
-      htmlFor="email"
-      className={`absolute left-3 top-[7%] -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 
-        peer-placeholder-shown:top-[38%] peer-placeholder-shown:text-sm 
-        peer-focus:top-[0.1rem] peer-focus:text-xs 
-        ${formState.email ? 'top-[0.1rem] text-xs' : ''} bg-[var(--primary-white-hex)] px-1`}
-    >
-      Email*
-    </label>
-  </div>
+   
+  </fieldset>
 
-            {renderPasswordField('Password*', 'password', 'showPassword')}
-            {renderPasswordField('Confirm Password*', 'confirmPassword', 'showConfirmPassword')}
-
+            {renderPasswordField('Password', 'password', 'showPassword')}
+            {renderPasswordField('Confirm Password', 'confirmPassword', 'showConfirmPassword')}
+            </main>
             <div className="flex items-start pl-[1rem] gap-2 mt-4">
         <input
           type="checkbox"
@@ -269,11 +256,9 @@ const RegisterForm = () => {
         </p>
       </div>
 
-            <button type="submit" className="w-full bg-[var(--primary-blue-hex)] text-white py-2 rounded-lg text-sm ">Create Account</button>
+            <button type="submit" className="w-full bg-[var(--primary-green-hex)] text-[var(--primary-white-hex)] py-3 rounded-lg ">Create Account</button>
 
-            <p className="text-center text-sm text-gray-500">
-              Already have an account? <Link href="/login" className="text-blue-600 font-semibold">Login</Link>
-            </p>
+           
           </form>
           {showModal && (
         <PopupModal

@@ -1,11 +1,11 @@
 .btn--secondary {
   display: flex;
-  border-radius: 1.5rem;
+  border-radius: 1rem;
   font-weight: 400;
   align-items: center;
   color: var(--primary-white-hex);
   box-shadow: var(--primary-black-hex) 1px 1px 4px;
-  background-color: var(--primary-blue-hex);
+  background-color: var(--primary-green-hex);
   padding: 0.5rem 1rem;
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@
 }
 .btn--primary {
   display: flex;
-  border-radius: 1.5rem;
+  border-radius: 0.7rem;
   font-weight: 400;
   align-items: center;
   background-color: var(--primary-white-hex);
@@ -27,8 +27,8 @@
 
 .btn--secondary:hover {
   background-color: var(--primary-white-hex);
-  color: var(--primary-blue-hex);
-  border:0.05rem solid var(--primary-blue-hex) ;
+  color: var(--primary-green-hex);
+  border:0.05rem solid var(--primary-green-hex) ;
   text-shadow: none;
   flex-direction: row-reverse;
   transition: flex-direction 0.3s ease-in-out 0.2s;

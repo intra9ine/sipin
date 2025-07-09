@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import AdminLayout from "./components/AdminLayout";
 
 
-const inter = Inter({
-  weight: "400",
-  variable:'--font-inter',
-  display: 'swap',
-  subsets: ["latin"],
-  preload:false
-});
+
 const poppins = Poppins({
   weight: "400",
   variable:'--font-poppins',
@@ -21,7 +15,9 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   robots: "index, follow",
- 
+  title: "SIPIN",
+  description: "Secure Investment platform",
+  
 };
 export default function RootLayout({
   children,
@@ -31,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} ${inter.variable}  antialiased`}
+        className={`${poppins.className}  antialiased`}
       >
         <AdminLayout>{children}</AdminLayout>
       </body>

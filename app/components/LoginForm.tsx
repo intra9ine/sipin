@@ -3,11 +3,10 @@
 
 import React, { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FormState, LoginFormProps } from '@/lib/type';
 import { useRouter } from 'next/navigation';
 import { fetchWithoutAuth } from '@/lib/apiData';
-import { LOGIN_USER, TOKEN_VALUE, USER_VALUE } from '@/lib/constant';
+import { LOGIN_USER, TOKEN_VALUE, USER_NAME, USER_VALUE } from '@/lib/constant';
 import Link from 'next/link';
 import { setEncryptedLocalStorageItem } from '@/lib/helper';
 
@@ -15,6 +14,7 @@ interface LoginResponse {
   token: string;
   userData: {
     user_id: string;
+    name:string;
   };
 }
 
@@ -43,6 +43,7 @@ const LoginForm = () => {
         const data = res.data as LoginResponse;
         setEncryptedLocalStorageItem(TOKEN_VALUE,data.token)
         setEncryptedLocalStorageItem(USER_VALUE,String(data.userData.user_id))
+        setEncryptedLocalStorageItem(USER_NAME,data.userData.name)
         toast.success('Login successful');
         router.push('/dashboard')
       } else {
@@ -61,34 +62,44 @@ const LoginForm = () => {
   return (
    
         
-        <section className="lg:w-full  w-1/2 bg-[var(--primary-white-hex)]  p-8 flex flex-col">
-          <h3 className="text-2xl font-semibold ">Login to SIPIN</h3>
+    <section className="lg:w-3/4 smxl:w-11/12 lg:mx-auto  absolute shadow-lg top-[4rem] bottom-[2rem] rounded-[2.5rem] right-[6rem] xlgm:right-[2rem] lg:right-0 lg:left-0 w-[35%] bg-[var(--primary-white-hex)]  p-8 smx:px-6 flex flex-col">
+    <main className='flex justify-between'>
+    <h1 className='text-lg smx:text-base mb-4'>Welcome to <span className='text-[var(--primary-green-hex)]'>SIPIN</span></h1>
+      <h1 className='smx:text-sm text-[var(--light-shade-grey-hex)]'>No Account ?<br/>
+     <Link href={'/register'} className='text-[var(--primary-green-hex)]'>Sign up</Link> 
+      </h1>
+      </main>
+      
+    <h3 className="text-4xl smx:text-3xl font-semibold mb-2 ">Sign in</h3>
           <form autoComplete="off" className="flex-1 space-y-4 overflow-y-auto" onSubmit={handleSubmit}>
+          
           <div className="flex flex-col  gap-4 pt-8">
-
+          <main className='text-sm flex flex-col gap-4 '>
             {/* Email */}
-  <div className="relative flex-1 pb-3">
+  <fieldset >
+  <label
+      
+      >
+       Enter your username or email address
+      </label>
     <input
       type="email"
-      required
       name='email'
+      required
       placeholder=" "
       value={formState.email}
       onChange={e => update({ email: e.target.value })}
-      className="peer  w-full border  px-3 py-2 rounded-lg text-sm  focus:outline-none"
+      className="input--custom"
     />
-    <label
-      htmlFor="email"
-      className={`absolute left-3 top-[7%] -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 
-        peer-placeholder-shown:top-[38%] peer-placeholder-shown:text-sm 
-        peer-focus:top-[-0.1rem] peer-focus:text-xs 
-        ${formState.email ? 'top-[0.1rem] text-xs' : ''} bg-[var(--primary-white-hex)] px-1`}
-    >
-      Email*
-    </label>
-  </div>
+  
+  </fieldset>
 
-  <fieldset className="relative pb-[0.5rem]">
+  <fieldset >
+  <label
+      
+      >
+        Enter your Password
+      </label>
     <input
   type={formState.showPassword ? 'text' : 'password'}
   required
@@ -96,41 +107,25 @@ const LoginForm = () => {
       value={formState.password}
       placeholder=" "
       onChange={e => update({ password: e.target.value })}
-      className="peer w-full border px-3 py-2 rounded-lg text-sm  focus:outline-none"
+      className="input--custom"
     />
+
+    </fieldset>
+    
   
-    <label
-      htmlFor={'password'}
-      className={`absolute left-3 transition-all duration-200  bg-[var(--primary-white-hex)] px-1 
-        text-sm text-gray-500 
-        ${
-          formState.password || formState.showPassword
-            ? 'top-[-0.7rem] text-xs' // stay up if there's value or password is shown
-            : 'top-[30%] -translate-y-1/2 peer-placeholder-shown:top-[39%] peer-placeholder-shown:text-sm peer-focus:top-[-0.1rem] peer-focus:text-xs'
-        }`}
-    >
-      Password*
-    </label>
   
-    <button
-      type="button"
-      onClick={() => update({ showPassword: !formState.showPassword })}
-      className={`${formState.password || formState.showPassword?'top-[39%]':'top-[39%]'} absolute right-2  -translate-y-1/2`}
-    >
-      {formState.showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
-    </button>
   
    
-  </fieldset>
+<aside className='w-full pb-5 flex justify-end items-center'>
+  <Link href={'/forgot-password'} className='text-[var(--primary-sky-blue-hex)]'>Forgot Password</Link>
+</aside>
           
-
+</main>
          
 
-            <button type="submit" className="w-full bg-[var(--primary-blue-hex)] text-white py-2 rounded-lg text-sm ">Login</button>
+            <button type="submit" className="w-full bg-[var(--primary-green-hex)] text-white py-2 rounded-lg text-sm ">Sign in</button>
 
-            <p className="text-center text-sm text-gray-500">
-              {`Don't have an account?`} <Link href="/register" className="text-blue-600 font-semibold">Register</Link>
-            </p>
+           
             </div>
 
           </form>

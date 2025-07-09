@@ -21,58 +21,58 @@ html, body {
   :root {
     /* black variant */
     --primary-black-hex: #000000;
-    --lighter-black-hex:#393939;
-    --cool-black-hex:#000a11;
-    --darker-black-hex:#000101;
-    --lighter-shade-black-hex:#1E1E1E;
-    --label-black-hex:#282828;
+    --transparent-black-hex:#050617;
       /* white variant */
    --primary-white-hex:#fff;
-   --greyish-white-hex:#F5F8FA;
    --pinkish-white-hex:#F4F5F8;
  /* blue variant */
- --primary-blue-hex: #0E2A46;
- --darker-blue-hex:#190D30;
+ --primary-blue-hex: #1A237E;
+ --darker-blue-hex:#05004E;
  --light-blue-hex:#1C1C81;
  --lighter-blue-hex:#9f9ff1;
  --table-blue-hex:#decdfc;
 
  /* yellow variant */
  --primary-yellow-hex:#F1C40F;
+ --light-yellow-hex:#FFF4DE;
+
  /*  red variant */
  --primary-red-hex:#AD1519;
  --darker-red-hex:#84090C;
+ --light-red-hex:#FFE2E5;;
  /* orange variant */
  --primary-orange-hex:#CD4236;
+ --light-orange-hex:#FFFAF1;
  /* green variant */
- --primary-green-hex:#22D07B;
- --light-green-hex:#2DAE0B;
+ --primary-green-hex:#0CA052;;
+ --light-green-hex:#22D07B;
+ --lighter-green-hex:#DCFCE7;
+
  /* purple variant */
  --primary-purple-hex:#07222C;
+ --light-purple-hex:#F3E8FF;
+
 /* grey variant */
 --light-grey-hex:#B1B1B1;
---light-shade-grey-hex:#565A5B;
+--border-grey-hex:#ADADAD;
+--light-shade-grey-hex:#8D8D8D;
 --lighter-grey-hex:#EBEBEB;
 --darker-grey-hex:#6C6C6C;
---medium-grey-hex:#A4A4A4;
+--medium-grey-hex:#737791;
+--table-outer-grey-hex:#D9D9D9;
+--pagination-btn-hex:#DADADA66;
+--view-text-hex:#808080;
+/* sky blue */
+--primary-sky-blue-hex:#4285F4;
 
   }
-
-.font-poppins{
-  font-family: var(--font-poppins);
-}
-
-
-.font-inter{
-  font-family: var(--font-inter);
-}
 
 
 ::-webkit-scrollbar{
   background-color: var(--lighter-grey-hex);
-  width: 0.5rem;
+  width: 0.2rem;
   border-radius: 2rem;
-  height: 0.5rem;
+  height: 0.2rem;
 }
 
 
@@ -139,7 +139,7 @@ html, body {
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background-color: var(--light-blue-hex);
+  background-color: var(--light-green-hex);
 }
 .pulse-bubble-1 {
   animation: pulse .4s ease 0s infinite alternate;
@@ -152,14 +152,10 @@ html, body {
 }
 
 
-/* navbar */
-.dashboard-nav{
-  border-top-left-radius: 2rem;
-  background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
-}
 
 
-.sidebar-container{
-  border-top-right-radius: 3rem;
-  border-bottom-left-radius: 3rem;
+
+
+.recharts-legend-wrapper{
+  bottom: -1rem !important;
 }

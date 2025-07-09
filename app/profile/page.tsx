@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, 
+  // useRef,
+   useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { EDIT_INFO, TOKEN_VALUE, USER_INFO } from '@/lib/constant';
 import { getEncryptedLocalStorageItem } from '@/lib/helper';
 import { fetchAuthorized } from '@/lib/apiData';
@@ -18,16 +20,16 @@ interface User {
 }
 
 const Profile = () => {
-  const fileRef = useRef<HTMLInputElement | null>(null);
+  // const fileRef = useRef<HTMLInputElement | null>(null);
 
-  const [user, setUser] = useState<User>({
-    email: '',
-    phone_number: '',
-    first_name: '',
-    last_name: '',
-    password:'',
-    doc: ''
-  });
+  // const [user, setUser] = useState<User>({
+  //   email: '',
+  //   phone_number: '',
+  //   first_name: '',
+  //   last_name: '',
+  //   password:'',
+  //   doc: ''
+  // });
 
   const [form, setForm] = useState({
     first_name: '',
@@ -81,16 +83,16 @@ const Profile = () => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const triggerFileUpload = () => {
-    fileRef.current?.click();
-  };
+  // const triggerFileUpload = () => {
+  //   fileRef.current?.click();
+  // };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      const fileURL = URL.createObjectURL(e.target.files[0]);
-      setUser(prev => ({ ...prev, doc: fileURL }));
-    }
-  };
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files?.[0]) {
+  //     const fileURL = URL.createObjectURL(e.target.files[0]);
+  //     setUser(prev => ({ ...prev, doc: fileURL }));
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,24 +131,24 @@ return
     }
   };
 
-  const getInitials = (name: string) => name?.charAt(0).toUpperCase();
+  // const getInitials = (name: string) => name?.charAt(0).toUpperCase();
 
-  const randomColor = () => {
-    const colors = ['#0E2A46', '#AD1519', '#22D07B'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
+  // const randomColor = () => {
+  //   const colors = ['#0E2A46', '#AD1519', '#22D07B'];
+  //   return colors[Math.floor(Math.random() * colors.length)];
+  // };
 
   return (
     <motion.div
-      className="max-w-xl  mx-auto p-6 my-20 bg-white shadow-lg rounded-xl"
+      className="max-w-xl   mx-auto py-8 px-10 mt-[10rem] mb-[5rem] bg-white shadow-lg rounded-[1.5rem]"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
     >
-      <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
+      {/* <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
         Profile
-      </h2>
+      </h2> */}
 
-      <div className="flex justify-center mb-6 relative group">
+      {/* <div className="flex justify-center mb-6 relative group">
         <div
           onClick={triggerFileUpload}
           className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 cursor-pointer relative flex items-center justify-center group hover:ring-2 ring-blue-500 transition-all"
@@ -178,81 +180,106 @@ return
           accept="image/*"
           className="hidden"
         />
-      </div>
+      </div> */}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block mb-1 text-gray-600">Email</label>
+        <label
+      
+      >
+       Email<span className='text-[var(--primary-red-hex)]'>*</span>
+      </label>
           <input
             type="email"
-            value={form.email}
+            value={form.email ||""}
             disabled
-           className="input--secondary"
+           className="input--custom"
           />
         </div>
 
         <div>
-          <label className="block mb-1 text-gray-600">Phone Number</label>
+        <label
+      
+      >
+       Phone Number<span className='text-[var(--primary-red-hex)]'>*</span>
+      </label>
           <input
             type="text"
-            value={form.phone_number}
+            value={form.phone_number ||""}
             disabled
-             className="input--secondary"
+             className="input--custom"
           />
         </div>
 
-        <div className="grid lg:grid-cols-1 grid-cols-2 gap-4">
+        
           <div>
-            <label className="block mb-1 text-gray-600">First Name</label>
+          <label
+      
+      >
+        First Name<span className='text-[var(--primary-red-hex)]'>*</span>
+      </label>
             <input
               type="text"
               name="first_name"
-              value={form.first_name}
+               placeholder='First Name'
+              value={form.first_name||""}
               onChange={handleChange}
-               className="input--secondary"
+               className="input--custom"
             />
           </div>
           <div>
-            <label className="block mb-1 text-gray-600">Last Name</label>
+          <label
+      
+      >
+        Last Name
+      </label>
             <input
               type="text"
               name="last_name"
-              value={form.last_name}
+               placeholder='Last Name'
+              value={form.last_name ||""}
               onChange={handleChange}
-               className="input--secondary"
+               className="input--custom"
             />
           </div>
-        </div>
+         
+       
 
-        <div className="grid lg:grid-cols-1 grid-cols-3 gap-4">
-          <div>
-            <label className="block mb-1 text-gray-600">Old Password</label>
+        
+          <div >
+          <label
+      
+      >
+       Password
+      </label>
             <input
               type="password"
               name="password"
               defaultValue={form.old_password}
-               className="input--secondary"
+               className="input--custom"
                disabled
             />
-          </div>
-          <div>
-            <label className="block mb-1 text-gray-600">New Password</label>
+  
+          <div className='my-2'>
+            <label>New Password</label>
             <input
               type="password"
+               placeholder='New Password'
               name="new_password"
               value={form.new_password}
               onChange={handleChange}
-               className="input--secondary"
+               className="input--custom"
             />
           </div>
           <div>
-            <label className="block mb-1 text-gray-600">Confirm Password</label>
+            <label >Confirm Password</label>
             <input
+            placeholder='Confirm Password'
               type="password"
               name="confirm_password"
               value={form.confirm_password}
               onChange={handleChange}
-               className="input--secondary"
+               className="input--custom"
             />
           </div>
         </div>
@@ -261,7 +288,7 @@ return
           type="submit"
           whileTap={{ scale: 0.95 }}
           disabled={loading}
-          className="w-[10rem] mt-4 bg-[var(--primary-blue-hex)] hover:bg-[var(--light-blue-hex)] text-white font-medium py-2.5 rounded transition-all"
+          className="w-full mt-4 bg-[var(--primary-green-hex)] hover:bg-[var(--light-green-hex)] text-white font-medium py-2.5 rounded transition-all"
         >
           {loading ? 'Saving...' : 'Update Profile'}
         </motion.button>

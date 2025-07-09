@@ -5,6 +5,7 @@ import PopupModal from '@/components/PopupModal';
 import { fetchAuthorized } from '@/lib/apiData';
 import { GET_ALL_SCHEME, PAYMENT_EDIT, TOKEN_VALUE, USER_VALUE } from '@/lib/constant';
 import { getEncryptedLocalStorageItem } from '@/lib/helper';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -53,7 +54,26 @@ const Scheme = () => {
       const res = await fetchAuthorized(GET_ALL_SCHEME, token, 'GET');
       if (res.status === 'success') {
         const data = res.data as SchemeData[];
-        setRowData(data);
+        const schemeMap = new Map();
+
+for (const item of data) {
+  const key = `${item.turnover}_${item.duration}_${item.tier_name}`;
+
+  // If this combo is not stored yet, store it
+  if (!schemeMap.has(key)) {
+    schemeMap.set(key, item);
+  }
+
+  // But if this is the preferred user, replace whatever was there
+  if (userValue &&item.user_id === +userValue) {
+    schemeMap.set(key, item);
+  }
+}
+
+const uniqueSchemes = Array.from(schemeMap.values());
+
+       
+        setRowData(uniqueSchemes ||[]);
       } else {
         setRowData([]);
         console.log(res.data?.toString() || 'Something went wrong');
@@ -146,58 +166,62 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
 
 
   return (
-    <div className="min-h-screen font-poppins p-6 bg-gray-50">
-      <main className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold mb-6">Scheme</h1>
-     
-      </main>
+    <section className=" bg-[var(--lighter-green-hex)]  min-h-screen p-6 ">
+   
 
       {loading ? (
         <Loader />
       ) : rowData.length > 0 ? (
         
-<section className=' lg:mb-[5rem]'>
-<main className='grid grid-cols-4 xlg:grid-cols-2 xlg:gap-6 smx:gap-2 smxlx:grid-cols-1 border-l border-r border-t-[0.2rem] border-t-[var(--primary-blue-hex)]'>
+<section className='mt-[12rem] lg:mt-[6rem] smxlx:mt-[4rem] lg:mb-[5rem]'>
+<main className='grid grid-cols-4 gap-10 xlg:grid-cols-2 xlg:gap-6 smx:gap-2 smxlx:grid-cols-1 smxlx:gap-y-24 '>
   {formatSchemesByTier(rowData).map((item, index) => {
-     const isTierPaid = item.schemeLists.some((scheme) => scheme.user_id !== null && userValue && scheme.user_id==+userValue );
+  
+  const isTierPaid = item.schemeLists.every(
+    (scheme) => scheme.user_id !== null && userValue && scheme.user_id == +userValue
+  );
      return(
-    <article
-      key={item.id}
-      className={`flex flex-col items-center py-4 px-3 shadow-sm hover:shadow-lg transition-shadow duration-300
-        ${index === 0 ? 'shadow-2xl border border-[var(--primary-blue-hex)]  relative' : ''}`}
-    >
-      {index === 0 && (
-        <div className="absolute top-0 left-0 bg-[var(--primary-blue-hex)] text-[var(--primary-white-hex)] px-2 py-1 text-xs rounded-br-lg">
+      <section key={item.id} className='relative'>
+      {index === 1 && (
+        <div className="text-lg  uppercase font-semibold absolute w-full z-0 pt-4 pb-16 top-[-3.5rem] rounded-t-[2.5rem] left-0 bg-[var(--primary-green-hex)] text-[var(--primary-white-hex)] px-2 flex justify-center items-center rounded-br-lg">
           Recommended
         </div>
       )}
-
+      <article
+      key={item.id}
+      className={`relative flex rounded-[2.5rem] flex-col bg-[var(--primary-blue-hex)] text-[var(--primary-white-hex)] items-start py-4 px-5 shadow-sm hover:shadow-lg transition-shadow duration-300
+        ${index === 1 ? 'shadow-2xl border border-[var(--primary-blue-hex)]' : ''}`}
+    >
+      
+    
+      {/* Article Content */}
       <h1 className='text-lg font-semibold text-center leading-[3rem]'>{item.title}</h1>
       <h1 className='text-4xl font-semibold font-inter text-center leading-[3rem]'>
         {`${item.amount} `}<span className='text-sm'>THB</span>
       </h1>
-
-      <ul className='flex flex-col gap-2 mt-8 h-[14rem] smx:h-[12rem] xlg:text-sm'>
+    
+      <ul className='flex flex-col gap-2 mt-8 h-[14rem] smx:h-[12rem] xlg:text-sm z-10'>
         {item.schemeLists.map((listItem) => (
-          <li key={listItem?.scheme_id}>
-            <span>{listItem?.turnover} - {listItem.duration} Months{listItem.user_id}</span>
+          <li  key={listItem?.scheme_id} className='flex gap-2 items-center'>
+           <Image width={100} height={100} alt='check' src={'/icons/check.svg'} className='w-[1rem]'/>
+            <span>{listItem?.turnover} - {listItem.duration} Months</span>
           </li>
         ))}
       </ul>
-      
-
+    <main className='w-full '>
       <button
-  disabled={isTierPaid}
-  onClick={() => handlePay(item.schemeLists, item.amount, item.title)}
-  className={`mt-4 px-4 py-2 rounded transition 
-    ${isTierPaid 
-      ? 'bg-gray-300 cursor-not-allowed text-gray-500' 
-      : 'bg-[var(--primary-blue-hex)] text-[var(--primary-white-hex)] hover:brightness-110'}`}
->
-  {isTierPaid ? 'Paid' : 'Pay'}
-</button>
-
+        disabled={isTierPaid}
+        onClick={() => handlePay(item.schemeLists, item.amount, item.title)}
+        className={`mt-4 px-4 w-full py-2 rounded-[1rem] transition z-10 font-bold bg-gray-300
+          ${isTierPaid 
+            ? ' cursor-not-allowed text-gray-500 ' 
+            : ' text-[var(--primary-green-hex)] hover:brightness-110'}`}
+      >
+        {isTierPaid ? 'Paid' : 'Pay Now'}
+      </button>
+      </main>
     </article>
+    </section>
   )})}
 </main>
 
@@ -240,7 +264,7 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
         />
       )}
 <Toaster/>.
-    </div>
+    </section>
   );
 };
 

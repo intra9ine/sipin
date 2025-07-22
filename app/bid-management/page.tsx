@@ -6,7 +6,7 @@ import StatusDropdown from '@/components/StatusDropDown';
 import Table from '@/components/Table';
 import { fetchAuthorized } from '@/lib/apiData';
 import { GET_ALL_BID_SCHEME, GET_ALL_BID_USERS, MONTHLY_BID_EDIT, MONTHLY_BID_WINNER, SCHEME_GET_ALL_PAYMENT, SCHEME_PAYMENT_EDIT, TOKEN_VALUE, USER_VALUE } from '@/lib/constant';
-import {  getEncryptedLocalStorageItem, getOrdinal } from '@/lib/helper';
+import {  formatISODate, getEncryptedLocalStorageItem, getOrdinal } from '@/lib/helper';
 import { TableCellType } from '@/lib/type';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -35,6 +35,8 @@ interface SchemeData {
   base_amount:number;
   distribution_done_prev_month:number
   distribution_done_current_month:number
+  interest_rate:string;
+  total_with_interest:string;
 }
 interface UserData {
   user_id: number;
@@ -65,7 +67,7 @@ const [tierName,setTierName]=useState('')
   const token = getEncryptedLocalStorageItem(TOKEN_VALUE);
   const [bidAmount, setBidAmount] = useState<number>();
   const userValue = getEncryptedLocalStorageItem(USER_VALUE);
-  const headers = ['Scheme Id', 'Turnover', 'Duration','Remaining Months','Total Months Paid','Total Amount Paid','Total Gain','Base Amount','Joining Status','Joined On', 'Action'];
+  const headers = ['Scheme Id', 'Turnover', 'Duration','Remaining Months','Total Months Paid','Total Amount Paid','Total Gain','Base Amount','Bank Interest','Final Base Amount','Joining Status','Joined On', 'Action'];
   const turnover = Number(formData?.turnover) || 0;
   const duration = Number(formData?.duration) || 1; // prevent divide-by-zero
   
@@ -245,8 +247,10 @@ const handleBidding=(scheme_id:number,scheme:SchemeData)=>{
     { type: 'text', value: row.total_amount_paid },
     { type: 'text', value: row.total_user_gains },
     { type: 'number', value: row.base_amount },
+    { type: 'text', value: row.status === 'Active' ? `${Math.round(+(row.interest_rate ?? '0'))}%` : '-' },
+    { type: 'text', value: row.status==='Active'?row.total_with_interest:''},
     { type: 'text', value: row.status },
-    { type: 'text', value: row.join_date },
+    { type: 'text', value: formatISODate(row.join_date) },
 
     {
       type: 'actions',
@@ -255,7 +259,7 @@ const handleBidding=(scheme_id:number,scheme:SchemeData)=>{
           label: 'Join',
           variant: 'join',
           onClick: () => handleJoinScheme(row),
-          disabled:(row.distribution_done_current_month===0 &&row.months_paid!==0)
+          disabled:((row.distribution_done_current_month===0 &&row.months_paid!==0)||row.duration==row.months_paid)
         },
         {
           label: 'View',
@@ -473,7 +477,7 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     </div>
           <button
             onClick={getBidResults}
-            disabled={userData.some(user => user.latest_bid_amount === null) ||userData.filter((item)=>item.latest_bid_amount!==null).length!==userData.length}
+            disabled={userData.some(user => user.latest_bid_amount === null) ||userData.filter((item)=>item.latest_bid_amount!==null).length!==userData.length || userData.length===0}
             className="disabled:bg-[var(--light-grey-hex)] px-4 py-1 text-xs bg-[var(--primary-green-hex)] text-white  hover:bg-[var(--light-green-hex)] transition"
           >
             Get Bid Results
@@ -559,7 +563,11 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
                       >
                         Raise Bid
                       </button>
-                      <div className="font-bold text-xs">{user.latest_bid_amount}</div>
+                      <div className="font-bold text-xs">{user.latest_bid_amount && !isNaN(user.latest_bid_amount)
+  ? `${Math.round(Number(user.latest_bid_amount))}%`
+  : '—'}
+
+                      </div>
                     </>
                   ) : (
                     <main>
@@ -646,13 +654,24 @@ const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         onSubmit={handleBidSubmit}
       >
         <input
-          type="number"
-          placeholder="Enter bid amount"
-          value={bidAmount ||''}
-          onChange={(e) => setBidAmount(Number(e.target.value))}
-          className="w-full border border-[--primary-grey-hex] rounded-[2rem] px-3 py-2 mb-4"
-          required
-        />
+  type="number"
+  placeholder="Enter bid in %"
+  value={bidAmount || ''}
+  onChange={(e) => {
+    const value = Number(e.target.value);
+    if (value >= 1 && value <= 100) {
+      setBidAmount(value);
+    } else if (e.target.value === '') {
+      setBidAmount(0);
+    }
+  }}
+  min={1}
+  max={100}
+  step={1}
+  className="w-full border border-[--primary-grey-hex] rounded-[2rem] px-3 py-2 mb-4"
+  required
+/>
+
         <div className="flex justify-end gap-4 font-medium ">
           <button
             type="button"

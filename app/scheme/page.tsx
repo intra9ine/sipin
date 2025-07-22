@@ -6,6 +6,7 @@ import { fetchAuthorized } from '@/lib/apiData';
 import { GET_ALL_SCHEME, PAYMENT_EDIT, TOKEN_VALUE, USER_VALUE } from '@/lib/constant';
 import { getEncryptedLocalStorageItem } from '@/lib/helper';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -48,7 +49,7 @@ const Scheme = () => {
   const token = getEncryptedLocalStorageItem(TOKEN_VALUE);
   const userValue = getEncryptedLocalStorageItem(USER_VALUE);
  const [schemeLists,setSchemeLists]=useState<SchemeListItem[]>()
-
+const router=useRouter()
   const fetchSchemeData = async (token: string) => {
     try {
       const res = await fetchAuthorized(GET_ALL_SCHEME, token, 'GET');
@@ -97,33 +98,35 @@ const uniqueSchemes = Array.from(schemeMap.values());
 
 
   const formatSchemesByTier = (schemes: SchemeData[]): GroupedScheme[] => {
-    const tierMap: Record<string, { id: number; title: string; amount: string; schemeLists: SchemeListItem[] }> = {
-      Normal: { id: 1, title: 'Normal', amount: '50', schemeLists: []},
-      Basic: { id: 2, title: 'Basic', amount: '100', schemeLists: [] },
-      Standard: { id: 3, title: 'Standard', amount: '200', schemeLists: [] },
-      Premium: { id: 4, title: 'Premium', amount: '300', schemeLists: [] },
+    const tierMap: Record<string, GroupedScheme> = {
+      Free: { id: 1, title: 'Free', amount: '0', schemeLists: [] },
+      Basic: { id: 2, title: 'Basic', amount: '0', schemeLists: [] },
+      Standard: { id: 3, title: 'Standard', amount: '0', schemeLists: [] },
+      Premium: { id: 4, title: 'Premium', amount: '0', schemeLists: [] },
     };
-console.log(schemes,'schemes')
+  
     for (const scheme of schemes) {
       const tier = scheme.tier_name as keyof typeof tierMap;
       if (tierMap[tier]) {
+        if (tierMap[tier].amount === '0' && scheme.amount) {
+          tierMap[tier].amount = scheme.amount.toString();
+        }
+  
         tierMap[tier].schemeLists.push({
           scheme_id: scheme.scheme_id,
           turnover: scheme.turnover,
           duration: scheme.duration,
-          user_id:scheme.user_id
+          user_id: scheme.user_id,
         });
       }
     }
-
-    
   
     return Object.values(tierMap);
   };
   
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  
+  
+  const handlePaySubmission=async()=>{
     if (!token) {
       toast.error('Invalid Token');
       return;
@@ -132,37 +135,54 @@ console.log(schemes,'schemes')
     try {
       
 
-     const req={
-      amount:formData.amount,
-      currency:'THD',
-      payment_method:'card',
-      tier_name :formData.tier_name
-     }
-
-      const res = await fetchAuthorized(PAYMENT_EDIT, token, 'POST', req);
-
-      if (res.status === 'success') {
-        toast.success(`Payment done for ${formData.tier_name}`);
-        setFormData({ amount: '', tier_name: ''});
-        setShowModal(false);
-        fetchSchemeData(token);
-      } else {
-        toast.error(res.data?.toString() || 'Something went wrong');
+      const req={
+       amount:formData.amount,
+       currency:'IDR',
+       payment_method:'card',
+       tier_name :formData.tier_name
       }
-    } catch (error) {
-      toast.error(`${error}`);
-    }
+ 
+       const res = await fetchAuthorized(PAYMENT_EDIT, token, 'POST', req);
+ 
+       if (res.status === 'success') {
+        if (formData?.tier_name === 'Free') {
+          toast.success('Now you can use free trial');
+          router.push('/bid-management');
+        } else if (formData?.tier_name) {
+          toast.success(`Payment done for ${formData.tier_name}`);
+        }
+        
+         setFormData({ amount: '', tier_name: ''});
+         setShowModal(false);
+         fetchSchemeData(token);
+       } else {
+         toast.error(res.data?.toString() || 'Something went wrong');
+       }
+     } catch (error) {
+       toast.error(`${error}`);
+     }
+  }
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handlePaySubmission()
+   
+   
   }; 
 
-const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
-  setShowModal(true);
-  setSchemeLists(schemeLists)
-  setFormData((prev) => ({
-    ...prev,
-    amount,
-    tier_name
-  }));
-}
+  const handlePay = (schemeLists: SchemeListItem[], amount: string, tier_name: string) => {
+   
+    setSchemeLists(schemeLists);
+    setFormData((prev) => ({
+      ...prev,
+      amount,
+      tier_name
+    }));
+ 
+   
+  
+    setShowModal(true);
+  };
+  
 
 
   return (
@@ -176,10 +196,11 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
 <section className='mt-[12rem] lg:mt-[6rem] smxlx:mt-[4rem] lg:mb-[5rem]'>
 <main className='grid grid-cols-4 gap-10 xlg:grid-cols-2 xlg:gap-6 smx:gap-2 smxlx:grid-cols-1 smxlx:gap-y-24 '>
   {formatSchemesByTier(rowData).map((item, index) => {
-  
+  console.log(item.schemeLists,'item')
   const isTierPaid = item.schemeLists.every(
     (scheme) => scheme.user_id !== null && userValue && scheme.user_id == +userValue
   );
+  
      return(
       <section key={item.id} className='relative'>
       {index === 1 && (
@@ -189,35 +210,55 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
       )}
       <article
       key={item.id}
-      className={`relative flex rounded-[2.5rem] flex-col bg-[var(--primary-blue-hex)] text-[var(--primary-white-hex)] items-start py-4 px-5 shadow-sm hover:shadow-lg transition-shadow duration-300
-        ${index === 1 ? 'shadow-2xl border border-[var(--primary-blue-hex)]' : ''}`}
+      className={`relative flex rounded-[2.5rem] flex-col bg-[var(--primary-white-hex)] text-[var(--primary-black-hex)] items-start py-4 px-5 shadow-sm hover:shadow-lg transition-shadow duration-300
+        ${index === 1 ? 'shadow-2xl border-[0.3rem] border-[var(--primary-green-hex)]' : ''}`}
     >
       
     
       {/* Article Content */}
       <h1 className='text-lg font-semibold text-center leading-[3rem]'>{item.title}</h1>
       <h1 className='text-4xl font-semibold font-inter text-center leading-[3rem]'>
-        {`${item.amount} `}<span className='text-sm'>THB</span>
+        {`${item.amount} `}<span className='text-sm'>IDR</span>
       </h1>
     
+
+    
       <ul className='flex flex-col gap-2 mt-8 h-[14rem] smx:h-[12rem] xlg:text-sm z-10'>
-        {item.schemeLists.map((listItem) => (
+      <li  className='flex gap-2 items-center'>
+           <Image width={100} height={100} alt='check' src={'/icons/check.svg'} className='w-[1rem]'/>
+           
+            <span>Join up to {item.schemeLists.length} Schemes</span>
+          </li>
+          <li  className='flex gap-2 items-center'>
+           <Image width={100} height={100} alt='check' src={'/icons/check.svg'} className='w-[1rem]'/>
+           
+            <span>Credit Score should be {item.id==1?'600+':item.id===2?'650+':item.id===3?'700+':'750+'}</span>
+          </li>
+        {/* {item.schemeLists.map((listItem) => (
           <li  key={listItem?.scheme_id} className='flex gap-2 items-center'>
            <Image width={100} height={100} alt='check' src={'/icons/check.svg'} className='w-[1rem]'/>
             <span>{listItem?.turnover} - {listItem.duration} Months</span>
+            
           </li>
-        ))}
+        ))} */}
       </ul>
     <main className='w-full '>
-      <button
-        disabled={isTierPaid}
-        onClick={() => handlePay(item.schemeLists, item.amount, item.title)}
-        className={`mt-4 px-4 w-full py-2 rounded-[1rem] transition z-10 font-bold bg-gray-300
-          ${isTierPaid 
-            ? ' cursor-not-allowed text-gray-500 ' 
-            : ' text-[var(--primary-green-hex)] hover:brightness-110'}`}
-      >
-        {isTierPaid ? 'Paid' : 'Pay Now'}
+    <button
+  // disabled={isTierPaid}
+  onClick={() => {
+   
+    if (isTierPaid) {
+  
+      router.push('/bid-management');
+    } else {
+      handlePay(item.schemeLists, item.amount, item.title);
+    }
+  }}
+  className={`mt-4 px-4 w-full py-2 rounded-[1rem] transition z-10 font-bold bg-gray-300`}
+>
+
+
+        {item.id===1?'Get Started':isTierPaid ? 'Get Started' : 'Pay Now'}
       </button>
       </main>
     </article>
@@ -234,7 +275,7 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
       )}
   {showModal && (
         <PopupModal
-          title={ 'Payment'}
+          title={formData.amount=='0'?'Get Started' :'Payment'}
           onClose={() => setShowModal(false)}
           content={
             <form className="flex flex-col gap-3 " onSubmit={handleSubmit}>
@@ -256,7 +297,7 @@ const handlePay=(schemeLists:SchemeListItem[],amount:string,tier_name:string)=>{
                 
               <main className="w-full mt-4 flex justify-center items-center">
                 <button type="submit" className="w-[10rem] btn--secondary">
-                 {`Pay ${formData.amount}`}
+                 {formData.amount==='0'?'Join Scheme':`Pay ${formData.amount}`}
                 </button>
               </main>
             </form>

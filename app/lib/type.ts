@@ -10,7 +10,7 @@
     password: string;
     phone_number?: string | null;
     status?: 'Pending' | 'Active' | 'InActive';
-    type?: 'Normal' | 'Basic' | 'Standard' | 'Premium' | 'Trial';
+    type?: 'Free' | 'Basic' | 'Standard' | 'Premium' | 'Trial';
     createdAt?: string; // or Date
     updatedAt?: string; // or Date
     doc?: string | null;

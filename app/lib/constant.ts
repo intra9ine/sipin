@@ -66,7 +66,7 @@ export const USER_NAME='__uets@!9!n^al$$*12%'
             },
            
         ],
-         title:'Normal',
+         title:'Free',
          amount:'50'
     },
     {

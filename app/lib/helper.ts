@@ -56,4 +56,26 @@ export const getEncryptedLocalStorageItem = (key: string): string | null => {
       suffixes[0]
     );
   }
+
+ export  function formatISODate(
+    isoDate: string,
+    format: 'DD-MM-YYYY' | 'DD/MM/YYYY' | 'YYYY-MM-DD' = 'DD-MM-YYYY',
+  ): string {
+    const date = new Date(isoDate);
+  
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+  
+    switch (format) {
+      case 'DD/MM/YYYY':
+        return `${day}/${month}/${year}`;
+      case 'YYYY-MM-DD':
+        return `${year}-${month}-${day}`;
+      case 'DD-MM-YYYY':
+      default:
+        return `${day}-${month}-${year}`;
+    }
+  }
+  
   

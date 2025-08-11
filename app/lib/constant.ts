@@ -1,5 +1,7 @@
 
-export const API_END_POINT=`http://localhost:8000/api/` //test
+// export const API_END_POINT=`http://localhost:8000/api/` //test
+export const API_END_POINT=`https://qrjsp6bx7jfavyantcop76cn5y0vsumn.lambda-url.us-east-1.on.aws/api/` //test
+
 
 // USER API
 export const REGISTER_USER='user/register'
